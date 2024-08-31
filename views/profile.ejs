@@ -1,0 +1,58 @@
+<%- include('../partials/header') %>
+<% if(success.length>0){ %>
+    <div class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500">
+        <span class="inline-block mt-1 mb-1 text-white">
+            <%= success %>
+        </span>
+    </div>
+    <% } %>
+    <% if(error.length>0){ %>
+        <div class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500">
+            <span class="inline-block mt-1 mb-1 text-white">
+                <%= error %>
+            </span>
+        </div>
+        <% } %>
+<div class="bg-blue-100 flex justify-center items-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <form action="/user/update-profile" method="post" enctype="multipart/form-data" class="space-y-6">
+            <!-- Profile Picture -->
+            <div class="flex justify-center relative mb-6">
+                <img class="w-32 h-32 rounded-full object-cover border-4 border-blue-500" src="data:image/jpeg;base64,<%= user.picture.toString('base64') %>" name="picture" alt="<%= user.fullname %>'s Profile Picture">
+                <input type="file" name="picture" id="picture" class="hidden">
+                <label for="picture" class="cursor-pointer"><i class="ri-add-circle-fill text-red-500 absolute bottom-0 left-[46%] text-3xl"></i></label>
+            </div>
+
+            <!-- Full Name -->
+            <div>
+                <label for="fullname" class="block text-sm font-medium text-gray-700">Full Name</label>
+                <input type="text" id="fullname" name="fullname" value="<%= user.fullname %>" 
+                    class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            </div>
+
+            <!-- Email -->
+            <!-- <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" id="email" name="email" value="<%= user.email %>" 
+                    class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            </div> -->
+
+            <!-- Contact -->
+            <div>
+                <label for="contact" class="block text-sm font-medium text-gray-700">Contact</label>
+                <input type="text" id="contact" name="contact" value="<%= user.contact %>" 
+                    class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            </div>
+
+            <!-- Update Profile Button -->
+            <div class="flex justify-center">
+                <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition">
+                    Update Profile
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<%- include('../partials/footer') %>

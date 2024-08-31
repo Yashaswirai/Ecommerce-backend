@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+    <div id="main">
+        <% if(error.length>0){ %>
+            <div class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500">
+                <span class="inline-block mt-1 mb-1 text-white">
+                    <%= error %>
+                </span>
+            </div>
+            <% } %>
+                <h1 class="m-2 text-3xl font-bold text-solid">Lumina</h1>
+                <div id="forms" class="flex items-center justify-around">
+                    <div id="register">
+                        <h1 class="text-3xl font-light">Welcome to <span
+                                class="font-semibold text-blue-500">Lumina</span></h1>
+                        <h2 class="text-lg font-light mb-5">Create your account</h2>
+                        <form action="/user/register" method="post">
+                            <input class="bg-zinc-200 mb-3 px-2 py-2 rounded-lg outline-none w-full" type="text"
+                                name="fullname" placeholder="Fullname">
+                            <input class="bg-zinc-200 mb-3 px-2 py-2 rounded-lg outline-none w-full" type="email"
+                                name="email" placeholder="Email">
+                            <input class="bg-zinc-200 mb-3 px-2 py-2 rounded-lg outline-none w-full" type="password"
+                                name="password" placeholder="Password">
+                            <input class="bg-blue-500 text-zinc-100 rounded-3xl px-5 py-3" type="submit"
+                                value="Create My Account">
+                        </form>
+                    </div>
+                    <div id="login" class="py-10">
+                        <h2 class="text-xl font-light mb-5">Login your account.</h2>
+                        <form action="/user/login" method="post">
+                            <input class="bg-zinc-200 mb-3 px-2 py-2 rounded-lg outline-none w-full" type="email"
+                                name="email" placeholder="Email">
+                            <input class="bg-zinc-200 mb-3 px-2 py-2 rounded-lg outline-none w-full" type="password"
+                                name="password" placeholder="Password">
+                            <input class="bg-blue-500 text-zinc-100 rounded-3xl px-5 py-3" type="submit" value="Login">
+                        </form>
+                    </div>
+                </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<%- include('../partials/header') %>
+<% if(success.length>0){ %>
+    <div class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-blue-500">
+        <span class="inline-block mt-1 mb-1 text-white">
+            <%= success %>
+        </span>
+    </div>
+    <% } %>
+<% if(error.length>0){ %>
+    <div class="absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 p-3 rounded-md bg-red-500">
+        <span class="inline-block mt-1 mb-1 text-white">
+            <%= error %>
+        </span>
+    </div>
+    <% } %>
+<div class="flex justify-between mx-5">
+    <h1 class="text-3xl font-semibold text-blue-500">Welcome Admin👋🏻</h1>
+    <a href="/owner/logout" class="px-5 py-2 bg-red-500 text-white text-lg rounded-md">Logout</a>
+</div>
+    
+    <div class="w-full h-screen flex items-start px-20 py-20">
+        <div class="w-[25%] flex h-screen flex-col items-start">
+            <div class="flex flex-col">
+                <a class="block w-fit mb-2" href="/owner/adminpanel">All Products</a>
+                <a class="block w-fit mb-2" href="/owner/admin">Create new product</a>
+            </div>
+        </div>
+        <div class="w-[75%] flex flex-col gap-5 h-screen">
+            <!-- <a class="text-red-500" href="">Delete all</a> -->
+            <div class="flex flex-wrap">
+                <% if(owner.products.length > 0){ %>
+                    <% owner.products.forEach(function(product){ %>
+                        <div class="w-60 bg-[<%= product.panelcolor %>] ml-3 mb-5">
+                                    <div class="w-full h-52 bg-[<%= product.bgcolor %>]  flex justify-center items-center">
+                                        <img class="h-[11rem]" src="data:image/jpeg;base64, <%= product.image.toString('base64') %>" alt="">
+                                    </div>
+                                    <div class="flex justify-between items-center px-4 py-4">
+                                        <div>
+                                            <h3><%= product.name %></h3>
+                                            <h4>₹ <%= product.price %></h4>
+                                        </div>
+                                        <a class="w-fit h-7 px-3 rounded-md text-white bg-red-500" href="/product/delete/<%= product._id %>">Delete</a>
+                                    </div>
+                                </div>
+                        <% }) %>
+                <% }%>                                                              
+            </div>
+        </div>
+    </div>
+    <%- include('../partials/footer') %>
