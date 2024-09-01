@@ -82,8 +82,72 @@
                     <h3 class="font-semibold text-xl text-green-600">₹ 0</h3>
                 <% } %>                
             </div>
-            <a class="block" href="/payment/<%= user._id %>"><button class="w-[25vw] mt-5 py-3 rounded-3xl font-semibold text-white text-xl bg-red-500">Buy Now</button></a>
-            <form action=""></form>
+            <a class="block" id="buyNowBtn"><button class="w-[25vw] mt-5 py-3 rounded-3xl font-semibold text-white text-xl bg-red-500">Buy Now</button></a>
         </div>
     </div>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    document.getElementById("buyNowBtn").addEventListener("click", function(e) {
+        e.preventDefault();
+
+        // Fetch user and bill details
+        const userId = "<%= user._id %>";
+        const amount = "<%= bill %>";
+
+        // Make a request to your backend to create a Razorpay order
+        fetch(`/createOrder/${userId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                amount: amount
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Open Razorpay payment gateway
+            const options = {
+                "key": "rzp_test_u8Ib952SS99ANf", // Enter the Key ID generated from the Dashboard
+                "amount": data.amount, // Amount in paise
+                "currency": "INR",
+                "order_id": data.id, // Razorpay Order ID
+                "handler": function (response){
+                    // Send payment details to your server for verification
+                    fetch('/verifyPayment', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            order_id: data.id,
+                            payment_id: response.razorpay_payment_id,
+                            signature: response.razorpay_signature
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(result => {
+                        if(result.status === "success"){
+                            window.location.href = "/success"; // Redirect to success page
+                        } else {
+                            alert("Payment failed. Please try again.");
+                        }
+                    })
+                },
+                "prefill": {
+                    "name": "<%= user.fullname %>",
+                    "email": "<%= user.email %>",
+                    "contact": "<%= user.contact %>"
+                },
+                "theme": {
+                    "color": "#F37254"
+                }
+            };
+
+            const rzp1 = new Razorpay(options);
+            rzp1.open();
+        });
+    });
+</script>
+
     <%- include('../partials/footer') %>

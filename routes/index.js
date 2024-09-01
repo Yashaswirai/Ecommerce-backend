@@ -3,7 +3,7 @@ const router = express.Router();
 const isLoggedIn = require('../middlewares/isLoggedIn');
 const productModel = require('../models/product-model');
 const userModel = require('../models/user-model');
-
+const { payment,verifyPayment } = require('../controllers/payment-controller');
 // index page route
 router.get('/', function (req, res) {
     let error = req.flash('error');
@@ -57,4 +57,6 @@ router.get("/remove/:productid",isLoggedIn,async (req,res) => {
     
 });
 
+router.post("/createOrder/:userid",isLoggedIn, payment);
+router.post("/verifyPayment",isLoggedIn, verifyPayment);
 module.exports = router;

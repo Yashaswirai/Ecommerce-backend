@@ -9,7 +9,7 @@ const indexRouter = require('./routes/index');
 const expressSession = require('express-session');
 const flash = require('connect-flash');
 const cookieParser = require('cookie-parser');
-
+const http = require('http').Server(app);
 require("dotenv").config();
 
 app.set('view engine', 'ejs');
@@ -31,4 +31,4 @@ app.use('/owner',ownerRouter);
 app.use('/product',productRouter);
 app.use('/',indexRouter);
 
-app.listen(3000)
+http.listen(3000)
