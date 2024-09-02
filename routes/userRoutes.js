@@ -31,6 +31,10 @@ router.post("/update-profile", upload.single("picture"), isLoggedIn, async funct
 
         // Create an object to hold the updated fields
         const updateFields = { fullname, contact };
+
+        if (req.file) {
+            updateFields.picture = req.file.buffer;
+        }
         
         // If the user provided a new password, verify the old password first
         if (password && password.trim()) {

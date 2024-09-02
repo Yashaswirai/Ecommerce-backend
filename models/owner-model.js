@@ -9,6 +9,13 @@ const ownerSchema = mongoose.Schema({
         ref:"post"
     }],
     gstin:String,
-    picture:String,
+    picture:{
+        type:Buffer,
+        default:"/images/uploads/profile.jpg",
+    },
+    orders:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"user"
+    }]
 });
 module.exports = mongoose.model('owner',ownerSchema);
