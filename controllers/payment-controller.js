@@ -2,6 +2,8 @@ const express = require('express');
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
 const userModel = require('../models/user-model')
+const ownerModel = require('../models/owner-model');
+const { request } = require('http');
 
 
 // Initialize Razorpay instance
@@ -49,10 +51,20 @@ module.exports.verifyPayment = async (req, res) => {
         }
         user.cart=[];
         await user.save();
-        res.json({ status: "success" });
+        user = await user.populate("orders");
+        for(let i = 0; i < user.orders.length; i++){
+            var owner = await ownerModel.findOne({_id:user.orders[i].owner});
+            if(owner.orders.indexOf(user._id) === -1){
+                owner.orders.push(user._id);
+                await owner.save();
+            }            
+        }
+        req.flash("success","Order Placed Successfully");
+        res.redirect("/shop");
     } else {
         // Payment failed
-        res.json({ status: "failure" });
+        req.flash("error","Payment failed");
+        res.redirect("/shop");
     }
 };
 

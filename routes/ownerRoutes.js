@@ -94,15 +94,15 @@ router.get("/logout",ownerLoggedIn,async function(req,res) {
     res.redirect("/owner");
 });
 
-// Owner Profile Route
+// Admin Profile Route
 router.get("/profile",ownerLoggedIn,async function(req,res) {
-    let owner = await ownerModel.findOne({ email: req.owner.email });
+    let owner = await ownerModel.findOne({ email: req.owner.email }).populate("orders");
     let success = req.flash("success");
     let error = req.flash("error");
-    res.render("adminProfile", { owner, success, error });
+    res.render("adminProfile", { owner, success, error ,navlinks:false });
 });
 
-// owner Update profile
+// Admin Update profile
 
 router.post("/update-profile", upload.single("picture"), ownerLoggedIn, async function (req, res) {
     try {
