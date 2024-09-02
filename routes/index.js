@@ -44,7 +44,7 @@ router.get("/cart",isLoggedIn,async (req,res)=>{
     }
     let bill = (totalMRP+20) - totalDiscount;
     let success = req.flash("success");
-    res.render("cart",{user,bill,totalMRP,totalDiscount,success});
+    res.render("cart",{user,bill,totalMRP,totalDiscount,success,razorpayKeyId: process.env.RAZORPAY_KEY_ID });
 });
 
 // item removing from cart

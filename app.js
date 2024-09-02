@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const db = require('./config/mongoose-connection');
+require("dotenv").config();
 const userRouter = require('./routes/userRoutes');
 const ownerRouter = require('./routes/ownerRoutes');
 const productRouter = require('./routes/productRoutes');
@@ -10,7 +11,7 @@ const expressSession = require('express-session');
 const flash = require('connect-flash');
 const cookieParser = require('cookie-parser');
 const http = require('http').Server(app);
-require("dotenv").config();
+
 
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));

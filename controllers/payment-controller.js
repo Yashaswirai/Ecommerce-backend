@@ -2,12 +2,11 @@ const express = require('express');
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
 
-const router = express.Router();
 
 // Initialize Razorpay instance
 const razorpay = new Razorpay({
-  key_id: "rzp_test_u8Ib952SS99ANf",
-  key_secret: 'sN86p86V5Q2v8DnZDWwD2xdd'
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
 module.exports.payment =  async (req, res) => {

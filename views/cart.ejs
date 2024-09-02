@@ -93,7 +93,7 @@
         // Fetch user and bill details
         const userId = "<%= user._id %>";
         const amount = "<%= bill %>";
-
+        var razorpayKeyId = '<%= razorpayKeyId %>';
         // Make a request to your backend to create a Razorpay order
         fetch(`/createOrder/${userId}`, {
             method: 'POST',
@@ -108,7 +108,7 @@
         .then(data => {
             // Open Razorpay payment gateway
             const options = {
-                "key": "rzp_test_u8Ib952SS99ANf", // Enter the Key ID generated from the Dashboard
+                "key": razorpayKeyId, // Enter the Key ID generated from the Dashboard
                 "amount": data.amount, // Amount in paise
                 "currency": "INR",
                 "order_id": data.id, // Razorpay Order ID
