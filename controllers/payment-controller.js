@@ -1,6 +1,7 @@
 const express = require('express');
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
+const userModel = require('../models/user-model')
 
 
 // Initialize Razorpay instance
@@ -29,7 +30,7 @@ module.exports.payment =  async (req, res) => {
 };
 
 // Verify payment signature after payment
-module.exports.verifyPayment = (req, res) => {
+module.exports.verifyPayment = async (req, res) => {
     const { order_id, payment_id, signature } = req.body;
 
     const body = order_id + "|" + payment_id;
@@ -42,6 +43,12 @@ module.exports.verifyPayment = (req, res) => {
 
     if (isAuthentic) {
         // Payment is successful, update order status in your database
+        let user = await userModel.findOne({email: req.user.email});
+        for (let i = 0; i < user.cart.length; i++) {
+            user.orders.push(user.cart[i]);
+        }
+        user.cart=[];
+        await user.save();
         res.json({ status: "success" });
     } else {
         // Payment failed

@@ -10,6 +10,10 @@ const postSchema = mongoose.Schema({
     },
     bgcolor:String,
     panelcolor:String,
-    textcolor:String
+    textcolor:String,
+    owner:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"owner",
+    }
 });
 module.exports = mongoose.model('post',postSchema);

@@ -21,6 +21,8 @@ router.post('/create', upload.single("image"),ownerLoggedIn, async function (req
         let owner = await ownerModel.findOne({email:req.owner.email});
         owner.products.push(product._id);
         await owner.save();
+        product.owner = owner._id;
+        await product.save();
                 
         req.flash('success', "Product created successfully");
         res.redirect("/owner/admin");
