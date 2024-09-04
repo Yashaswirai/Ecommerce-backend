@@ -16,7 +16,7 @@ router.post('/login', loginUser);
 router.get('/logout', logoutUser);
 
 router.get('/profile', isLoggedIn, async function (req, res) {
-    let user = await userModel.findOne({ email: req.user.email });
+    let user = await userModel.findOne({ email: req.user.email }).populate('orders');
     let success = req.flash("success");
     let error = req.flash("error");
     res.render('profile', { user, success, error });

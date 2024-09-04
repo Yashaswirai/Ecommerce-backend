@@ -14,49 +14,70 @@
         </div>
         <% } %>
 <div class="bg-blue-100 flex justify-center items-center min-h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <form action="/user/update-profile" method="post" enctype="multipart/form-data" class="space-y-6">
-            <!-- Profile Picture -->
-            <div class="flex justify-center relative mb-6">
-                <img class="w-32 h-32 rounded-full object-cover border-4 border-blue-500" src="data:image/jpeg;base64,<%= user.picture.toString('base64') %>" name="picture" alt="<%= user.fullname %>'s Profile Picture">
-                <input type="file" name="picture" id="picture" class="hidden">
-                <label for="picture" class="cursor-pointer"><i class="ri-add-circle-fill text-red-500 absolute bottom-0 left-[46%] text-3xl"></i></label>
-            </div>
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-6xl flex">
+        <!-- Left side: Profile Update Form -->
+        <div class="w-1/2 pr-8">
+            <h2 class="text-2xl font-bold mb-6">Update Profile</h2>
+            <form action="/user/update-profile" method="post" enctype="multipart/form-data" class="space-y-6">
+                <!-- Profile Picture -->
+                <div class="flex justify-center relative mb-6">
+                    <img class="w-32 h-32 rounded-full object-cover border-4 border-blue-500" src="data:image/jpeg;base64,<%= user.picture.toString('base64') %>" name="picture" alt="<%= user.fullname %>'s Profile Picture">
+                    <input type="file" name="picture" id="picture" class="hidden">
+                    <label for="picture" class="cursor-pointer"><i class="ri-add-circle-fill text-red-500 absolute bottom-0 left-[46%] text-3xl"></i></label>
+                </div>
 
-            <!-- Full Name -->
-            <div>
-                <label for="fullname" class="block text-sm font-medium text-gray-700">Full Name</label>
-                <input type="text" id="fullname" name="fullname" value="<%= user.fullname %>" 
-                    class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-            </div>
+                <!-- Full Name -->
+                <div>
+                    <label for="fullname" class="block text-sm font-medium text-gray-700">Full Name</label>
+                    <input type="text" id="fullname" name="fullname" value="<%= user.fullname %>" 
+                        class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
 
-            <!--Old Password -->
-            <div>
-                <label for="oldpassworrd" class="block text-sm font-medium text-gray-700">Old password</label>
-                <input type="password" id="oldpassword" name="oldpassword" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-            </div>
-            <!--New Password -->
-            <div>
-                <label for="passworrd" class="block text-sm font-medium text-gray-700">New password</label>
-                <input type="password" id="password" name="password" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-            </div>
+                <!--Old Password -->
+                <div>
+                    <label for="oldpassworrd" class="block text-sm font-medium text-gray-700">Old password</label>
+                    <input type="password" id="oldpassword" name="oldpassword" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <!--New Password -->
+                <div>
+                    <label for="passworrd" class="block text-sm font-medium text-gray-700">New password</label>
+                    <input type="password" id="password" name="password" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
 
-            <!-- Contact -->
-            <div>
-                <label for="contact" class="block text-sm font-medium text-gray-700">Contact</label>
-                <input type="text" id="contact" name="contact" value="<%= user.contact %>" 
-                    class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-            </div>
+                <!-- Contact -->
+                <div>
+                    <label for="contact" class="block text-sm font-medium text-gray-700">Contact</label>
+                    <input type="text" id="contact" name="contact" value="<%= user.contact %>" 
+                        class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
 
-            <!-- Update Profile Button -->
-            <div class="flex justify-center">
-                <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition">
-                    Update Profile
-                </button>
+                <!-- Update Profile Button -->
+                <div class="flex justify-center">
+                    <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition">
+                        Update Profile
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Right side: Orders -->
+        <div class="w-1/2 pl-8 border-l">
+            <h2 class="text-2xl font-bold mb-6">Your Orders</h2>
+            <div class="space-y-4">
+                <% if (user.orders.length > 0) { %>
+                    <% user.orders.forEach(order => { %>
+                        <div class="bg-gray-100 p-4 rounded-md">
+                            <p class="font-semibold">Order ID: <%= order._id %></p>
+                            <p>Name: <%= order.name %></p>
+                            <p>Price: $<%= order.price %></p>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <p>No orders found.</p>
+                <% } %>
             </div>
-        </form>
+        </div>
     </div>
 </div>
-
 
 <%- include('../partials/footer') %>
