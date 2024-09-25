@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const db = require('./config/mongoose-connection');
 require("dotenv").config();
+const db = require('./config/mongoose-connection');
 const userRouter = require('./routes/userRoutes');
 const ownerRouter = require('./routes/ownerRoutes');
 const productRouter = require('./routes/productRoutes');
