@@ -1,0 +1,3 @@
+{
+    "MONGODB_URI": "mongodb+srv://yashaswirai2020:${MONGODB_PASSWORD}@cluster0.sv8oxnh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+}
